@@ -4,16 +4,6 @@
   become: false
 
   tasks:
-    - name: Install Docker
-      apt:
-        name: docker.io
-        state: present
-        update_cache: yes
-
-    - name: Install python docker SDK (required by Ansible docker modules)
-      apt:
-        name: python3-docker
-        state: present
 
     - name: Pull the latest Docker image
       community.docker.docker_image:
