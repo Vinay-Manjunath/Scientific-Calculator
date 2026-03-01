@@ -60,6 +60,8 @@ public class ScientificCalculator {
     public static void main(String args[]){
         Scanner sc=new Scanner(System.in);
 
+        int choice;
+
         do{
             System.out.println("\nScientific Calculator:\n" +
                     "Enter your choice:\n" +
@@ -73,10 +75,17 @@ public class ScientificCalculator {
                     "8.Factorial\n" +
                     "9.Exit");
 
-            int choice=sc.nextInt();
+            System.out.flush();
+
+            choice=sc.nextInt();
 
             double num1=0;
             double num2=0;
+
+            if (choice == 9) {
+                System.out.println("Exiting the calculator...");
+                break; 
+            }
 
             switch (choice) {
                 case 1:
