@@ -7,61 +7,60 @@ pipeline{
     }
 
     stages {
-            stage('Clone Git') {
-                steps {
-                    script {
-                        git branch: 'master',
-                            credentialsId: 'github_credentials',
-                            url: "${GITHUB_REPO_URL}"
+        stage('Clone Git') {
+            steps {
+                script {
+                    git branch: 'master',
+                        credentialsId: 'github_credentials',
+                        url: "${GITHUB_REPO_URL}"
+                }
+            }
+        }
+
+        stage('Build the Maven Project') {
+            steps {
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+
+        stage('Test the Maven project') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Verify JAR Existence') {
+            steps {
+                sh 'ls -lh target/'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build("${DOCKER_IMAGE_NAME}", '.')
+                }
+            }
+        }
+
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('', 'dockerhub-creds') {
+                        sh "docker tag ${DOCKER_IMAGE_NAME} ${DOCKER_HUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest"
+                        sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest"
                     }
                 }
             }
+        }
 
-            stage('Build the Maven Project') {
-                steps {
-                    sh 'mvn clean package -DskipTests'
-                }
-            }
-
-            stage('Test the Maven project') {
-                steps {
-                    sh 'mvn test'
-                }
-            }
-
-            stage('Verify JAR Existence') {
-                steps {
-                    sh 'ls -lh target/'
-                }
-            }
-
-            stage('Build Docker Image') {
-                steps {
-                    script {
-                        docker.build("${DOCKER_IMAGE_NAME}", '.')
-                    }
-                }
-            }
-
-            stage('Push Docker Image to Docker Hub') {
-                steps {
-                    script {
-                        docker.withRegistry('', 'dockerhub-creds') {
-                            sh "docker tag ${DOCKER_IMAGE_NAME} ${DOCKER_HUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest"
-                            sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest"
-                        }
-                    }
-                }
-            }
-
-            stage('Deploy with Ansible') {
-                steps {
-                    script {
-                        ansiblePlaybook(
-                            playbook: 'deploy.yml',
-                            inventory: 'inventory'
-                        )
-                    }
+        stage('Deploy with Ansible') {
+            steps {
+                script {
+                    ansiblePlaybook(
+                        playbook: 'deploy.yml',
+                        inventory: 'inventory'
+                    )
                 }
             }
         }
