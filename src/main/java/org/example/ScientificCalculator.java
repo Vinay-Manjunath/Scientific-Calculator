@@ -59,11 +59,12 @@ public class ScientificCalculator {
 
     public static void main(String args[]){
         Scanner sc=new Scanner(System.in);
+        PrintWriter out = new PrintWriter(System.out, true);
 
         int choice;
 
         do{
-            System.out.println("\nScientific Calculator:\n" +
+            out.println("\nScientific Calculator:\n" +
                     "Enter your choice:\n" +
                     "1.Add\n" +
                     "2.Subtract\n" +
@@ -74,8 +75,6 @@ public class ScientificCalculator {
                     "7.Logarithm\n" +
                     "8.Factorial\n" +
                     "9.Exit");
-
-            System.out.flush();
 
             choice=sc.nextInt();
 
