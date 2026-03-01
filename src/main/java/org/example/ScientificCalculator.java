@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.Scanner;
+import java.io.PrintWriter;
 
 public class ScientificCalculator {
     public static double add(double a,double b){
