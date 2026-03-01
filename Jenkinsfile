@@ -1,5 +1,5 @@
 pipeline{
-    agents any
+    agent any
     environment {
         DOCKER_IMAGE_NAME = 'scientific-calculator'
         GITHUB_REPO_URL = 'https://github.com/Vinay-Manjunath/Scientific-Calculator.git'
