@@ -60,12 +60,11 @@ public class ScientificCalculator {
 
     public static void main(String args[]){
         Scanner sc=new Scanner(System.in);
-        PrintWriter out = new PrintWriter(System.out, true);
 
         int choice;
 
         do{
-            out.println("\nScientific Calculator:\n" +
+            System.out.println("\nScientific Calculator:\n" +
                     "Enter your choice:\n" +
                     "1.Add\n" +
                     "2.Subtract\n" +
