@@ -1,5 +1,6 @@
-pipeline{
+pipeline {
     agent any
+
     environment {
         DOCKER_IMAGE_NAME = 'scientific-calculator'
         GITHUB_REPO_URL = 'https://github.com/Vinay-Manjunath/Scientific-Calculator.git'
@@ -7,13 +8,12 @@ pipeline{
     }
 
     stages {
+
         stage('Clone Git') {
             steps {
-                script {
-                    git branch: 'master',
-                        credentialsId: 'github_credentials',
-                        url: "${GITHUB_REPO_URL}"
-                }
+                git branch: 'master',
+                    credentialsId: 'github_credentials',
+                    url: "${GITHUB_REPO_URL}"
             }
         }
 
@@ -40,7 +40,7 @@ pipeline{
                 sh "docker build -t ${DOCKER_IMAGE_NAME} ."
             }
         }
-        
+
         stage('Push Docker Image to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(
@@ -48,7 +48,7 @@ pipeline{
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
-        
+
                     sh """
                         docker tag ${DOCKER_IMAGE_NAME} ${DOCKER_USER}/${DOCKER_IMAGE_NAME}:latest
                         echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin
@@ -60,28 +60,28 @@ pipeline{
 
         stage('Deploy with Ansible') {
             steps {
-                script {
-                    ansiblePlaybook(
-                        playbook: 'deploy.yml',
-                        inventory: 'inventory.ini'
-                    )
-                }
+                ansiblePlaybook(
+                    playbook: 'deploy.yml',
+                    inventory: 'inventory.ini'
+                )
             }
         }
-        post {
+    }
+
+    post {
 
         success {
             emailext(
                 subject: "SUCCESS: Jenkins Build #${BUILD_NUMBER}",
                 body: """
-                Build Successful
-                
-                Job Name: ${JOB_NAME}
-                Build Number: ${BUILD_NUMBER}
-                
-                Check details:
-                ${BUILD_URL}
-                """,
+Build Successful
+
+Job Name: ${JOB_NAME}
+Build Number: ${BUILD_NUMBER}
+
+Check details:
+${BUILD_URL}
+""",
                 to: "vinayksm86@gmail.com"
             )
         }
@@ -90,14 +90,14 @@ pipeline{
             emailext(
                 subject: "FAILURE: Jenkins Build #${BUILD_NUMBER}",
                 body: """
-                Build Failed
-                
-                Job Name: ${JOB_NAME}
-                Build Number: ${BUILD_NUMBER}
-                
-                Check logs:
-                ${BUILD_URL}
-                """,
+Build Failed
+
+Job Name: ${JOB_NAME}
+Build Number: ${BUILD_NUMBER}
+
+Check logs:
+${BUILD_URL}
+""",
                 to: "vinayksm86@gmail.com"
             )
         }
