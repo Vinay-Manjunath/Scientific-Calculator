@@ -71,9 +71,9 @@ pipeline {
     post {
 
         success {
-            emailext(
-                subject: "Jenkins Build SUCCESS - ${JOB_NAME} #${BUILD_NUMBER}",
-                body: """
+            mail to: 'vinayksm86@gmail.com',
+                 subject: "Jenkins Build SUCCESS - ${JOB_NAME} #${BUILD_NUMBER}",
+                 body: """
 Jenkins pipeline completed successfully.
 
 Job Name: ${JOB_NAME}
@@ -81,15 +81,13 @@ Build Number: ${BUILD_NUMBER}
 
 View Build Details:
 ${BUILD_URL}
-""",
-                to: "vinayksm86@gmail.com"
-            )
+"""
         }
 
         failure {
-            emailext(
-                subject: "Jenkins Build FAILURE - ${JOB_NAME} #${BUILD_NUMBER}",
-                body: """
+            mail to: 'vinayksm86@gmail.com',
+                 subject: "Jenkins Build FAILURE - ${JOB_NAME} #${BUILD_NUMBER}",
+                 body: """
 Jenkins pipeline has failed.
 
 Job Name: ${JOB_NAME}
@@ -97,10 +95,7 @@ Build Number: ${BUILD_NUMBER}
 
 Check Logs:
 ${BUILD_URL}
-
-""",
-                to: "vinayksm86@gmail.com"
-            )
+"""
         }
     }
 }
