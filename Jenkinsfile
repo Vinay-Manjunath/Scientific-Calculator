@@ -68,5 +68,38 @@ pipeline{
                 }
             }
         }
+        post {
+
+        success {
+            emailext(
+                subject: "SUCCESS: Jenkins Build #${BUILD_NUMBER}",
+                body: """
+                Build Successful
+                
+                Job Name: ${JOB_NAME}
+                Build Number: ${BUILD_NUMBER}
+                
+                Check details:
+                ${BUILD_URL}
+                """,
+                to: "vinayksm86@gmail.com"
+            )
+        }
+
+        failure {
+            emailext(
+                subject: "FAILURE: Jenkins Build #${BUILD_NUMBER}",
+                body: """
+                Build Failed
+                
+                Job Name: ${JOB_NAME}
+                Build Number: ${BUILD_NUMBER}
+                
+                Check logs:
+                ${BUILD_URL}
+                """,
+                to: "vinayksm86@gmail.com"
+            )
+        }
     }
 }
