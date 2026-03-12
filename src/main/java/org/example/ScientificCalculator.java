@@ -51,7 +51,7 @@ public class ScientificCalculator {
         if (num < 0) {
             throw new ArithmeticException("Error! Factorial of a negative number.");
         }
-        double result = 1;
+        long result = 1;
         for (int i = 1; i <= num; i++) {
             result *= i;
         }
