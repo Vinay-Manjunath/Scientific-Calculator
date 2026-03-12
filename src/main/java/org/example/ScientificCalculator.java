@@ -76,6 +76,8 @@ public class ScientificCalculator {
                     "8.Factorial\n" +
                     "9.Exit");
 
+            System.out.flush();
+
             choice=sc.nextInt();
 
             double num1=0;
