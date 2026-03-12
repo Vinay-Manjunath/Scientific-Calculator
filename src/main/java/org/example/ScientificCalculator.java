@@ -63,7 +63,7 @@ public class ScientificCalculator {
 
         int choice;
 
-        do{
+        while(true){
             System.out.println("\nScientific Calculator:\n" +
                     "Enter your choice:\n" +
                     "1.Add\n" +
@@ -167,6 +167,6 @@ public class ScientificCalculator {
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
-        }while (true);
+        }
     }
 }
