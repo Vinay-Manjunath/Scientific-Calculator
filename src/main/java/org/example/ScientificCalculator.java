@@ -47,7 +47,7 @@ public class ScientificCalculator {
         }
     }
 
-    public static double factorial(double num) {
+    public static long factorial(int num) {
         if (num < 0) {
             throw new ArithmeticException("Error! Factorial of a negative number.");
         }
@@ -75,6 +75,8 @@ public class ScientificCalculator {
                     "7.Logarithm\n" +
                     "8.Factorial\n" +
                     "9.Exit");
+
+            System.out.flush();
 
             choice=sc.nextInt();
 
@@ -157,7 +159,7 @@ public class ScientificCalculator {
                     break;
                 case 8:
                     System.out.print("Enter a number: ");
-                    num1 = sc.nextDouble();
+                    num1 = sc.nextInt();
                     try {
                         System.out.println("Result: " + factorial(num1));
                     } catch (Exception e) {
