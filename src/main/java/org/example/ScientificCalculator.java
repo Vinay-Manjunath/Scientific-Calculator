@@ -47,11 +47,11 @@ public class ScientificCalculator {
         }
     }
 
-    public static long factorial(int num) {
+    public static double factorial(double num) {
         if (num < 0) {
             throw new ArithmeticException("Error! Factorial of a negative number.");
         }
-        long result = 1;
+        double result = 1;
         for (int i = 1; i <= num; i++) {
             result *= i;
         }
@@ -159,7 +159,7 @@ public class ScientificCalculator {
                     break;
                 case 8:
                     System.out.print("Enter a number: ");
-                    num1 = sc.nextInt();
+                    num1 = sc.nextDouble();
                     try {
                         System.out.println("Result: " + factorial(num1));
                     } catch (Exception e) {
