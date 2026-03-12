@@ -22,5 +22,5 @@
         state: started
         restart_policy: always
         tty: true
-        stdin_open: true
+        interactive: true
         detach: true
