@@ -1,174 +1,86 @@
-package org.example;
+import org.example.ScientificCalculator;
+import org.junit.Test;
 
-import java.util.Scanner;
-import java.io.PrintWriter;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-public class ScientificCalculator {
-    public static double add(double a,double b){
-        return a+b;
+
+public class ScientificCalculatorTest {
+    @Test
+    public void testAdd() {
+        assertEquals(11.0, ScientificCalculator.add(6, 5), 0.0001);
+        assertEquals(-1.0, ScientificCalculator.add(-2, 1), 0.0001);
+        assertEquals(0.0, ScientificCalculator.add(0, 0), 0.0001);
     }
 
-    public static double subtract(double a,double b){
-        return a-b;
+    @Test
+    public void testSubtract() {
+        assertEquals(1.0, ScientificCalculator.subtract(3, 2), 0.0001);
+        assertEquals(-3.0, ScientificCalculator.subtract(-2, 1), 0.0001);
+        assertEquals(0.0, ScientificCalculator.subtract(0, 0), 0.0001);
     }
 
-    public static double multiply(double a,double b){
-        return a*b;
+    @Test
+    public void testMultiply() {
+        assertEquals(6.0, ScientificCalculator.multiply(2, 3), 0.0001);
+        assertEquals(-2.0, ScientificCalculator.multiply(-2, 1), 0.0001);
+        assertEquals(0.0, ScientificCalculator.multiply(0, 3), 0.0001);
     }
 
-    public static double divide(double a, double b) throws Exception{
-        if(b==0){
-            throw new ArithmeticException("Divide by 0 error");
-        }
-        else{
-            return a/b;
-        }
-    }
-
-    public static double power(double a,double b){
-        return Math.pow(a,b);
-    }
-
-    public static double sqrt(double a) throws Exception{
-        if(a<0){
-            throw new ArithmeticException("Error! Attempt to sqaure root to negative image");
-        }
-        else{
-            return Math.sqrt(a);
-        }
-    }
-
-    public static double logarithm(double a) throws Exception{
-        if(a<=0){
-            throw  new ArithmeticException("Error! Logarithm of zero or negative number.");
-        }
-        else{
-            return Math.log(a);
+    @Test
+    public void testDivide() throws Exception {
+        assertEquals(2.0, ScientificCalculator.divide(6, 3), 0.0001);
+        assertEquals(-2.0, ScientificCalculator.divide(-6, 3), 0.0001);
+        try {
+            ScientificCalculator.divide(1, 0);
+            fail("Expected ArithmeticException");
+        } catch (Exception e) {
+            assertEquals("Divide by 0 error",e.getMessage());
         }
     }
 
-    public static double factorial(double num) {
-        if (num < 0) {
-            throw new ArithmeticException("Error! Factorial of a negative number.");
-        }
-        double result = 1;
-        for (int i = 1; i <= num; i++) {
-            result *= i;
-        }
-        return result;
+    @Test
+    public void testPower() {
+        assertEquals(8.0, ScientificCalculator.power(2, 3), 0.0001);
+        assertEquals(1.0, ScientificCalculator.power(2, 0), 0.0001);
+        assertEquals(0.25, ScientificCalculator.power(2, -2), 0.0001);
     }
 
-    public static void main(String args[]){
-        Scanner sc=new Scanner(System.in);
+    @Test
+    public void testSquareRoot() throws Exception {
+        assertEquals(4.0, ScientificCalculator.sqrt(16), 0.0001);
+        assertEquals(0.0, ScientificCalculator.sqrt(0), 0.0001);
+        try {
+            ScientificCalculator.sqrt(-1);
+            fail("Expected ArithmeticException");
+        } catch (ArithmeticException e) {
+            assertEquals("Error! Attempt to sqaure root to negative image", e.getMessage());
+        }
+    }
 
-        int choice;
+    @Test
+    public void testLogarithm() throws Exception{
+        assertEquals(Math.log(2), ScientificCalculator.logarithm(2), 0.0001);
+        assertEquals(0.0, ScientificCalculator.logarithm(1), 0.0001);
+        try {
+            ScientificCalculator.logarithm(0);
+            fail("Expected ArithmeticException");
+        } catch (ArithmeticException e) {
+            assertEquals("Error! Logarithm of zero or negative number.",e.getMessage());
+        }
+    }
 
-        while(true){
-            System.out.println("\nScientific Calculator:\n" +
-                    "Enter your choice:\n" +
-                    "1.Add\n" +
-                    "2.Subtract\n" +
-                    "3.Multiply\n" +
-                    "4.Divide\n" +
-                    "5.Power\n" +
-                    "6.Square Root\n" +
-                    "7.Logarithm\n" +
-                    "8.Factorial\n" +
-                    "9.Exit");
-
-            System.out.flush();
-
-            choice=sc.nextInt();
-
-            double num1=0;
-            double num2=0;
-
-            if (choice == 9) {
-                System.out.println("Exiting the calculator...");
-                break; 
-            }
-
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter two numbers: ");
-                    num1 = sc.nextDouble();
-                    num2 = sc.nextDouble();
-                    try {
-                        System.out.println("Result: " + add(num1, num2));
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 2:
-                    System.out.print("Enter two numbers: ");
-                    num1 = sc.nextDouble();
-                    num2 = sc.nextDouble();
-                    try {
-                        System.out.println("Result: " + subtract(num1, num2));
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 3:
-                    System.out.print("Enter two numbers: ");
-                    num1 = sc.nextDouble();
-                    num2 = sc.nextDouble();
-                    try {
-                        System.out.println("Result: " + multiply(num1, num2));
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 4:
-                    System.out.print("Enter two numbers: ");
-                    num1 = sc.nextDouble();
-                    num2 = sc.nextDouble();
-                    try {
-                        System.out.println("Result: " + divide(num1, num2));
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 5:
-                    System.out.print("Enter base and exponent: ");
-                    num1 = sc.nextDouble();
-                    num2 = sc.nextDouble();
-                    try {
-                        System.out.println("Result: " + power(num1, num2));
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 6:
-                    System.out.print("Enter a number: ");
-                    num1 = sc.nextDouble();
-                    try {
-                        System.out.println("Result: " + sqrt(num1));
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 7:
-                    System.out.print("Enter a number: ");
-                    num1 = sc.nextDouble();
-                    try {
-                        System.out.println("Result: " + logarithm(num1));
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 8:
-                    System.out.print("Enter a number: ");
-                    num1 = sc.nextDouble();
-                    try {
-                        System.out.println("Result: " + factorial(num1));
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
+    // Test for factorial
+    @Test
+    public void testFactorial() {
+        assertEquals(120.0, ScientificCalculator.factorial(5), 0.0001); // 5! = 120
+        assertEquals(1.0, ScientificCalculator.factorial(0), 0.0001); // 0! = 1
+        assertEquals(1.0, ScientificCalculator.factorial(1), 0.0001); // 1! = 1
+        try {
+            ScientificCalculator.factorial(-5);
+            fail("Expected ArithmeticException");
+        } catch (ArithmeticException e) {
+            assertEquals("Error! Factorial of a negative number.", e.getMessage());
         }
     }
 }
