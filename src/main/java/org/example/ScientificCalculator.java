@@ -24,6 +24,7 @@ public class ScientificCalculator {
             return a/b;
         }
     }
+    
 
     public static double power(double a,double b){
         return Math.pow(a,b);
